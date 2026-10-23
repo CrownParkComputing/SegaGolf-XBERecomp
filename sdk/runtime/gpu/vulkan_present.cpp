@@ -309,6 +309,7 @@ void VulkanRenderer::ApplySettings() {
 }
 
 void VulkanRenderer::Present(const Surface& front) {
+    if (!paused_present_ && g_present_observer) g_present_observer();
     PerfScope perf_present{g_perf.present};
     if (cap_) {
         FinishCapture(front);

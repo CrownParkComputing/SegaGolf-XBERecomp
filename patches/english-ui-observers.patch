@@ -1,0 +1,39 @@
+diff --git a/sdk/runtime/gpu/backend.h b/sdk/runtime/gpu/backend.h
+index 1aa0a7c..91d6736 100644
+--- a/sdk/runtime/gpu/backend.h
++++ b/sdk/runtime/gpu/backend.h
+@@ -56,6 +56,10 @@ private:
+ };
+ 
+ std::unique_ptr<Backend> CreateBackend();
++// Optional title-local UI observers, called on the renderer thread. They do
++// not change the original draw/state or guest input regions.
++inline void (*g_draw_observer)(const State&, uint32_t, uint32_t, uint32_t, const uint8_t*) = nullptr;
++inline void (*g_present_observer)() = nullptr;
+ // the same backend driven from a thread of its own: calls return once recorded
+ std::unique_ptr<Backend> CreateThreadedBackend(std::unique_ptr<Backend> inner);
+ 
+diff --git a/sdk/runtime/gpu/vulkan.cpp b/sdk/runtime/gpu/vulkan.cpp
+index 39215b3..4ab1bfa 100644
+--- a/sdk/runtime/gpu/vulkan.cpp
++++ b/sdk/runtime/gpu/vulkan.cpp
+@@ -1759,6 +1759,7 @@ bool VulkanRenderer::AssembleDraw(const State& s, uint32_t prim, uint32_t start,
+ }
+ 
+ void VulkanRenderer::Draw(const State& s, uint32_t prim, uint32_t start, uint32_t count, const uint8_t* indices) {
++    if (g_draw_observer) g_draw_observer(s, prim, start, count, indices);
+     PerfScope perf_draw{g_perf.draw};
+     g_perf.draws++;
+     if (cap_) CapStep(s.rt);
+diff --git a/sdk/runtime/gpu/vulkan_present.cpp b/sdk/runtime/gpu/vulkan_present.cpp
+index 0eaa70a..67510eb 100644
+--- a/sdk/runtime/gpu/vulkan_present.cpp
++++ b/sdk/runtime/gpu/vulkan_present.cpp
+@@ -309,6 +309,7 @@ void VulkanRenderer::ApplySettings() {
+ }
+ 
+ void VulkanRenderer::Present(const Surface& front) {
++    if (!paused_present_ && g_present_observer) g_present_observer();
+     PerfScope perf_present{g_perf.present};
+     if (cap_) {
+         FinishCapture(front);

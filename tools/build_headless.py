@@ -14,6 +14,7 @@ if __name__ == "__main__":
     parser.add_argument("--generate-only", action="store_true")
     args = parser.parse_args()
     verify_image()
+    subprocess.run(["python3", "tools/build_localization.py"], cwd=ROOT, check=True)
     recompiler = (args.recompiler or ROOT / "out/build/linux-release/xbe_recomp").resolve()
     if not recompiler.is_file():
         parser.error("Build the port's tools first: python3 tools/build_native.py --tools-only")

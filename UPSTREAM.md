@@ -12,6 +12,9 @@ report completion, audio buffer handling, indexed draws, controller capability
 layout, target alpha, texture ownership/binding and offscreen Vulkan for the
 network server. Do not apply these patches again to the included SDK.
 
+`patches/english-ui-observers.patch` records the additional renderer observation
+hooks used by the English label layer. Those are also already applied.
+
 `UPSTREAM.json` records the original suite commit, patch list and SHA-256 of
 each included SDK file. The SDK's original license and third-party notices
 are retained in `sdk/LICENSE` and `sdk/THIRD_PARTY.txt`.

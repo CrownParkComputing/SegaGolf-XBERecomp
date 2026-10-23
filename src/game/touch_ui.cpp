@@ -1,5 +1,6 @@
 #include "game/touch.h"
 #include "game/swing.h"
+#include "game/language.h"
 #include "app/app.h"
 #include "core/log.h"
 #include <cstdlib>
@@ -49,6 +50,7 @@ void ToggleMenu() {
 }
 
 void Draw(double fps) {
+    golf::language::Draw();
     auto& io = ImGui::GetIO();
     if (!app::GraphicsMenuOpen()) {
         const auto point = ReadCursor();
@@ -78,6 +80,8 @@ void Draw(double fps) {
         ImGui::TextWrapped("Swing: hold the RIGHT mouse button, pull down to raise the club, pause at the desired power, then push up to hit. Releasing also returns the club. Controller: pull the right stick down, then return it. Keyboard: hold K for a full backswing, release to hit.");
         ImGui::TextWrapped("Start / Enter: start. Back / Backspace: insert a coin. F10 / R3 / Escape: resume.");
         ImGui::Separator();
+        bool english = golf::language::Enabled();
+        if (ImGui::Checkbox("English text and labels", &english)) golf::language::SetEnabled(english);
         int display = int(draft.display_mode);
         if (ImGui::Combo("Display", &display, "Fullscreen\0Borderless\0Windowed\0"))
             draft.display_mode = app::DisplayMode(display);

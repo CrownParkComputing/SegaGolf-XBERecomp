@@ -1,9 +1,11 @@
 #include "app/app.h"
 #include "image_symbols.h"
 #include "game/touch.h"
+#include "game/language.h"
 
 namespace {
 void HostInit() {
+    golf::language::Init();
     auto& settings = app::Get();
     if (!settings.width && !settings.height) {
         settings.width = 1280;
@@ -23,6 +25,7 @@ const app::GameInfo app::kGame = {
     .missing = L"Put the matching extracted Sega Golf files in assets.",
     .images = {{IMAGE_XBE, "SegaGolf"}},
     .init = HostInit,
+    .loaded = golf::language::Loaded,
     .window = golf::touch::Window,
     .ui = golf::touch::Draw,
     .keyboard_pad = true,

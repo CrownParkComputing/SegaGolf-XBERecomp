@@ -11,6 +11,12 @@ remain available. A mouse-driven shot has been verified through ball movement
 and the next shot. A complete hole, sound fidelity and Android remain
 unverified.
 
+The first English interface pass is enabled by default: 66 messages and 243
+sprite labels. F10's **English text and labels** checkbox switches languages;
+`SEGAGOLF_LANGUAGE=ja ./run.sh` starts in Japanese. Some course commentary,
+names, operator screens and artwork remain untranslated. See
+[localization notes](localization/README.md) for coverage and editing.
+
 Requires Linux x86-64, Python 3.11+, PyCryptodome for disc extraction, Clang,
 LLD, CMake 3.25+, Ninja and Vulkan 1.3 development files/drivers. CMake uses an
 installed SDL3 3.2+ or fetches SDL3; it also fetches the other pinned build

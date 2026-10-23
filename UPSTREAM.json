@@ -63,7 +63,7 @@
     "sdk/runtime/cpu/dispatch.cpp": "6c74690d4653aba60275909cce97bf8cbf2c3fdf6d76496cefee1c985c70f27a",
     "sdk/runtime/cpu/x86_context.h": "c4db7de5e5293c3ff078fbfba3cba895fa7dc774ef4b072d3df59d3dc612aa5c",
     "sdk/runtime/cpu/x86_ops.h": "7355f7d824355cbe75a3836b6aed05dcdebbb6e928350d0901f01c37d1c65102",
-    "sdk/runtime/gpu/backend.h": "29c986c468d43082e06090cff6cdba9ba1b297757d64366c1d379781406e1816",
+    "sdk/runtime/gpu/backend.h": "d7e53ecc82c48455d1bb7a08de89bb616d39266a2ad57526eaf4cf0bd7c3cf9a",
     "sdk/runtime/gpu/d3d12.cpp": "18bd3c0f48e37200126faf0314cdc91f4bb29741ea8964967aa9e05c8adc292d",
     "sdk/runtime/gpu/ext.h": "b5e4930a05bca17c11e89273acecd98d21b1173adfb3072be56570414b7c7c83",
     "sdk/runtime/gpu/nv2a_texture.cpp": "09e19a61a2f9463103d1f9a15777250c907dbd57260a3ccd6331b49f3b248542",
@@ -84,9 +84,9 @@
     "sdk/runtime/gpu/vk_shaders.h": "8229a8ba2f9e47ca9756c89586db00406c5b98751e9a8343993fbada800a857a",
     "sdk/runtime/gpu/vk_swapchain.cpp": "c4fe7bf3d179b3f39b3d3bc9a0c8915766e19c603f2cff020e763e7be80606e0",
     "sdk/runtime/gpu/vk_swapchain.h": "78093c3b2d6a3788b2c16b51055e8c2e8fbbcec597b183cf1cd1541fe3a4dcb6",
-    "sdk/runtime/gpu/vulkan.cpp": "d41b988d0cab23259d6543e36f7e72b87ca52f609a7182f6d744af94d4fb1bba",
+    "sdk/runtime/gpu/vulkan.cpp": "451d726b1119f7896c04630e77c5c175385ec5d6e21b8613e765d4195de73058",
     "sdk/runtime/gpu/vulkan.h": "be046f7adc4b722290fe1ba5dfc515242f43d7f4d54128ae2bb3ce53eec77b57",
-    "sdk/runtime/gpu/vulkan_present.cpp": "ee3b2f14892a18dbeba648ffc99f3938f374c8ca8ab939f2291b88669c20c6ae",
+    "sdk/runtime/gpu/vulkan_present.cpp": "93d417c06160530854b3dd47debffad195dc3fb1bc09878f15816a62cd83a461",
     "sdk/runtime/gpu/vulkan_readback.cpp": "4f9334948926c09bbbc51d6482bbf0f69435ef3d48c9f76ff6c6a8f515eaa4b6",
     "sdk/runtime/kernel/boot.cpp": "b6d5d329808ee4b35b0287b02694d57b280a2cc58f5728f8ee60adba19244349",
     "sdk/runtime/kernel/crypto.cpp": "9f9f8e93dc2032b5dfb18e5a54836504206885b94d899b25e0b8e4fc3606cebf",
@@ -165,5 +165,8 @@
     "sdk/xdk/4721/layout.toml": "39d3f5892d8a86d9823975ab772702a172ac38a33a91797db504d39b782a12c1",
     "sdk/xdk/5849/layout.toml": "8a2b4f06b63dcca1ecd31832d0fd65c8d2ef8232bc208561088ba6c9c5084404",
     "sdk/xdk/5849/signatures.toml": "7b3dca707db038c7e007c0a3f4681b4d456b1f98c4a77a61371d3808b95fb5a2"
-  }
+  },
+  "port_patches": [
+    "patches/english-ui-observers.patch"
+  ]
 }

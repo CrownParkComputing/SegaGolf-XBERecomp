@@ -3,6 +3,16 @@ project(SegaGolfNative LANGUAGES C CXX)
 include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/ChihiroPort.cmake")
 chihiro_port(SegaGolf golf.xbe SEGAGOLF_SDL_INPUT
     00dd5d68d50104d67e23965c36245a315732d239228e3c8ccf10f5a75b8fab0d)
+if(TARGET SegaGolf)
+    find_package(Python3 3.11 REQUIRED COMPONENTS Interpreter)
+    file(GLOB language_sprites CONFIGURE_DEPENDS assets/media/sprite/spr_ae_*.xst*)
+    add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/generated/game/language_tables.h"
+        COMMAND "${Python3_EXECUTABLE}" tools/build_localization.py
+        DEPENDS tools/build_localization.py tools/build_support.py localization/en.json assets/golf.xbe ${language_sprites}
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" VERBATIM)
+    add_custom_target(segagolf_language_tables DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/generated/game/language_tables.h")
+    add_dependencies(SegaGolf segagolf_language_tables)
+endif()
 option(SEGAGOLF_INPUT_SMOKE "Inject a bounded SDL mouse/keyboard sequence for input validation" OFF)
 if(SEGAGOLF_INPUT_SMOKE AND TARGET SegaGolf)
     target_sources(SegaGolf PRIVATE tests/input_smoke.cpp tests/swing_trace.cpp)
@@ -22,6 +32,13 @@ target_compile_options(SegaGolfTouchTests PRIVATE -UNDEBUG)
 add_test(NAME SegaGolfTouchTests COMMAND SegaGolfTouchTests)
 
 if(TARGET SegaGolf)
+add_executable(SegaGolfLanguageTests tests/language.cpp src/game/language.cpp
+    "${XBE_SDK_DIR}/runtime/core/log.cpp")
+target_include_directories(SegaGolfLanguageTests PRIVATE src generated/game "${XBE_SDK_DIR}/runtime")
+target_compile_options(SegaGolfLanguageTests PRIVATE -UNDEBUG)
+add_dependencies(SegaGolfLanguageTests segagolf_language_tables)
+add_test(NAME SegaGolfLanguageTests COMMAND SegaGolfLanguageTests "${CMAKE_CURRENT_SOURCE_DIR}/assets/golf.xbe")
+
 add_executable(SegaGolfSwingTests tests/swing.cpp src/game/swing.cpp src/game/mouse_sdl.cpp
     generated/game/x86_recomp.6.cpp generated/game/x86_recomp.18.cpp)
 target_include_directories(SegaGolfSwingTests PRIVATE src generated/game "${XBE_SDK_DIR}/runtime")

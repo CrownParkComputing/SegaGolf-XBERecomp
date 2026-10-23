@@ -35,7 +35,7 @@ def main():
     else:
         targets = ["recompile_SegaGolf" if args.generate_only else "SegaGolf"]
         if args.tests:
-            targets += ["SegaGolfNetworkTests", "SegaGolfTouchTests", "SegaGolfSwingTests", "SegaGolfResourceTests"]
+            targets += ["SegaGolfNetworkTests", "SegaGolfTouchTests", "SegaGolfSwingTests", "SegaGolfResourceTests", "SegaGolfLanguageTests"]
     subprocess.run(["cmake", "--build", "--preset", preset, "--target", *targets,
                     "--parallel", str(args.jobs)], cwd=ROOT, check=True)
 

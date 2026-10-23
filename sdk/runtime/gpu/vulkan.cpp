@@ -1759,6 +1759,7 @@ bool VulkanRenderer::AssembleDraw(const State& s, uint32_t prim, uint32_t start,
 }
 
 void VulkanRenderer::Draw(const State& s, uint32_t prim, uint32_t start, uint32_t count, const uint8_t* indices) {
+    if (g_draw_observer) g_draw_observer(s, prim, start, count, indices);
     PerfScope perf_draw{g_perf.draw};
     g_perf.draws++;
     if (cap_) CapStep(s.rt);

@@ -56,6 +56,10 @@ private:
 };
 
 std::unique_ptr<Backend> CreateBackend();
+// Optional title-local UI observers, called on the renderer thread. They do
+// not change the original draw/state or guest input regions.
+inline void (*g_draw_observer)(const State&, uint32_t, uint32_t, uint32_t, const uint8_t*) = nullptr;
+inline void (*g_present_observer)() = nullptr;
 // the same backend driven from a thread of its own: calls return once recorded
 std::unique_ptr<Backend> CreateThreadedBackend(std::unique_ptr<Backend> inner);
 

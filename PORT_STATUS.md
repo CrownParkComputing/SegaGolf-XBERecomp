@@ -164,7 +164,7 @@ all visible. Logs and images are archived under
 `.local/evidence/mouse-gameplay-final/`. Diagnostic evidence is excluded from
 source control.
 
-The four native regression tests pass: real TCP connection/accept, exact TCP and
+The five native regression tests pass: real TCP connection/accept, exact TCP and
 UDP request/reply bytes through board DMA, socket readiness and handle
 exhaustion; plus cursor movement, clipping, fine movement, serial handshake,
 contact checksums, edge transitions, quick mouse clicks, border mapping, focus
@@ -190,6 +190,28 @@ verifies a shot and its outcome, rather than a complete hole. Before,
 backswing, shot and result captures and both logs are archived under
 `.local/evidence/mouse-swing-final/`. Native and CPU diagnostic builds succeed;
 the normal native build disables scripted inputs and the swing trace hooks.
+
+The standalone English pass includes 66 runtime messages and 243 sprite labels,
+enabled by default and reversible through F10 or `SEGAGOLF_LANGUAGE=ja`.
+It covers card entry, common dialogs, play modes, multiplayer, tutorial text,
+club/camera/aim/spin controls and selected shot feedback. The generator validates
+the original executable, message capacity, printf argument types and XST/XPR
+layout. Runtime messages are fingerprint-checked before changing guest memory;
+the Japanese originals are retained for switching back. Sprite labels use
+renderer observations and host text panels, without modifying game artwork or
+touch regions. Counter labels cover only their portion of combined graphics.
+
+Native desktop captures confirm English card-entry controls and messages,
+tutorial instructions, and the first-hole gameplay controls. A mouse-driven
+shot still reaches the original forward-stroke detector and rendered shot.
+The language regression checks all original message fingerprints, exact Japanese
+restoration, unchanged surrounding memory, rejection of an altered original,
+Python/C++ texture signatures, the renderer's reversed V coordinates and label
+bounds that preserve live distance/shot numbers. All five CTest targets pass;
+the standalone native and CPU diagnostic builds succeed. Evidence remains local
+under `.local/evidence/english-interface-final/` and is excluded from Git.
+Course-specific commentary, names, operator text, audio and some HUD artwork
+remain Japanese; this is a first translation pass, not a complete localization.
 
 The SDK-overlay regression passes, Python tools compile, extraction refuses to
 overwrite existing files, and all 1,449 extracted file hashes/sizes were
