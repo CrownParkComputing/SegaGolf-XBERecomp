@@ -1,0 +1,6 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.patch -whitespace
+# Preserve the included upstream SDK's original formatting.
+sdk/** -whitespace

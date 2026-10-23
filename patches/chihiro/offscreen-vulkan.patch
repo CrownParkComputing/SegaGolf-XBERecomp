@@ -1,0 +1,24 @@
+--- a/runtime/gpu/vulkan.cpp
++++ b/runtime/gpu/vulkan.cpp
+@@ -6,6 +6,7 @@
+ #include <algorithm>
+ #include <bit>
+ #include <cmath>
++#include <cstdlib>
+ #include <cstring>
+ 
+ #include "app/app.h"
+@@ -2101,6 +2102,12 @@
+ namespace gpu {
+ 
+ // the SDK's backend on Linux; a game with a renderer of its own (src/vk) leaves this file out
+-std::unique_ptr<Backend> CreateBackend() { return std::make_unique<vk::VulkanRenderer>(); }
++std::unique_ptr<Backend> CreateBackend() {
++    // Keep real rendering and visibility reports for a background cabinet,
++    // without a window-system surface or a potentially blocking swap chain.
++    const char* configured = std::getenv("XBE_VULKAN_OFFSCREEN");
++    const bool offscreen = configured && std::strcmp(configured, "1") == 0;
++    return std::make_unique<vk::VulkanRenderer>(offscreen);
++}
+ 
+ }  // namespace gpu

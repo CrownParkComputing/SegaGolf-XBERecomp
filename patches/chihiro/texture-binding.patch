@@ -1,0 +1,54 @@
+--- a/runtime/xdk/d3d8.cpp
++++ b/runtime/xdk/d3d8.cpp
+@@ -172,7 +172,9 @@
+     g_stage_regs[stage] = tex ? gpu::nv2a::FromTexture({R32(tex), R32(tex + 4), R32(tex + 8), R32(tex + 12), R32(tex + 16)})
+                               : gpu::nv2a::TextureRegs{};
+     g_stage_regs[stage].palette = palette;
+-    g_state.textures[stage] = tex;
++    // Capture the GPU registers at SetTexture time, independent of later edits
++    // to the application header or its public reference count.
++    BindStageTexture(stage);
+ }
+ 
+ void LoadStagePalette(uint32_t stage, uint32_t pal) {
+@@ -646,6 +648,17 @@
+     return 0;
+ }
+ 
++// Public resource references use the low sixteen bits, independently of the
++// device's internal references. Acquiring a surface with no public owners also
++// acquires its parent texture, as D3DResource_AddRef does.
++void AddPublicRef(uint32_t resource) {
++    if (!resource) return;
++    const uint32_t common = R32(resource);
++    if (!(common & 0xFFFF) && (common & 0x70000) == 0x50000)
++        AddPublicRef(R32(resource + 0x14));
++    W32(resource, R32(resource) + 1);
++}
++
+ // targets and presentation
+ 
+ HLE_STDCALL(D3DDevice_SetRenderTarget, 2) {
+@@ -675,19 +688,19 @@
+ HLE_STDCALL(D3DDevice_GetBackBuffer2, 1) {
+     int32_t i = int32_t(a[0]);
+     uint32_t s = i < 0 ? g_buffers[0] : g_buffers[std::min<uint32_t>(uint32_t(i) + 1, g_buffer_count - 1)];
+-    W32(s, R32(s) + 1);
++    AddPublicRef(s);
+     return s;
+ }
+ 
+ HLE_STDCALL(D3DDevice_GetRenderTarget2, 0) {
+     uint32_t s = Dev(kDevRenderTarget);
+-    if (s) W32(s, R32(s) + 1);
++    AddPublicRef(s);
+     return s;
+ }
+ 
+ HLE_STDCALL(D3DDevice_GetDepthStencilSurface2, 0) {
+     uint32_t s = Dev(kDevDepth);
+-    if (s) W32(s, R32(s) + 1);
++    AddPublicRef(s);
+     return s;
+ }
+ 
