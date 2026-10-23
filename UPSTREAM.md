@@ -23,6 +23,12 @@ occlusion and retained depth contents. This patch is already applied too.
 each included SDK file. The SDK's original license and third-party notices
 are retained in `sdk/LICENSE` and `sdk/THIRD_PARTY.txt`.
 
+The standalone copy omits the generic `sdk/templates/game/` scaffolding,
+`sdk/tools/sdk_sync/` multi-repository maintenance tools and the cookbook
+pointer that depended on the suite's directory layout. The SDK README links
+to the original files at the pinned upstream commit. `UPSTREAM.json` lists
+these omissions and records the updated README hash.
+
 The SDK identifies its original upstream as
 [TGP482/XboxXBE-Recomp](https://github.com/TGP482/XboxXBE-Recomp).
 External build dependencies retain their upstream notices and are fetched at

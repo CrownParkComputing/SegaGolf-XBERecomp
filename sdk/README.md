@@ -21,11 +21,16 @@ This tool was originally created for porting [Tom Clancy's Splinter Cell: Double
 
 ## Porting Cookbook
 
-See [docs/XBE_PORTING_COOKBOOK.md](docs/XBE_PORTING_COOKBOOK.md) for the repeatable conversion workflow, graphics diagnosis, and lessons from the current five ports.
+This is the runtime snapshot included with the standalone Sega Golf port.
+See the [port README](../README.md) for its Linux build and launch instructions,
+and [runtime provenance](../UPSTREAM.md) for the applied Chihiro patches.
+The generic game templates and multi-repository SDK sync tools are omitted.
+The upstream [porting cookbook](https://github.com/CrownParkComputing/xbox-recomp-suite/blob/81b5264735ce97cf3c88ae6cdd63aee3f406215d/docs/XBE_PORTING_COOKBOOK.md)
+contains the suite's conversion workflow and graphics diagnosis notes.
 
 ## Game Setup
 
-1. Copy `templates/game` to a new repository and put this SDK in it as `sdk/`. Set `GAME_TITLE`, `GAME_XBE` and `GAME_EXE` at the top of `build.bat` (`GAME_EXE` in `release.bat` too), and the target and xbe in `add_xbe_image` in `CMakeLists.txt`.
+1. For a new game, use the [upstream game template](https://github.com/CrownParkComputing/xbox-recomp-suite/tree/81b5264735ce97cf3c88ae6cdd63aee3f406215d/sdk/templates/game) and put its SDK in the new repository as `sdk/`. Set `GAME_TITLE`, `GAME_XBE` and `GAME_EXE` at the top of `build.bat` (`GAME_EXE` in `release.bat` too), and the target and xbe in `add_xbe_image` in `CMakeLists.txt`.
 2. Put the game's XBE and its data folders in the `assets` folder. No game files, keys or generated code belong in any repository.
 3. Run `xbe_symbols`, which `build.bat` does on the first build:
    ```
@@ -80,7 +85,6 @@ A new XDK build needs `xdk/<build>/layout.toml` and signatures made from titles 
 - **Boot Splash** - Place a `splash.png` (or `.bmp`) beside the exe to display a splash screen at launch.
 - **Diagnostics** - Logs frame timing with `XBE_PERF`, captures a frame with F3 when `XBE_CAPTURE_DIR` is set and enables the Direct3D 12 debug layer with `XBE_D3D12_DEBUG`.
 - **Headless Harness** - Builds and runs a game on Linux without a window, GPU, audio or controller, for testing.
-- **SDK Sync** - Keeps the `sdk/` copies in game repositories in step with this repository.
 
 ## Credits
 

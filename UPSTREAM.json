@@ -15,13 +15,12 @@
     "sdk/.gitattributes": "02c4d9e006deb91568beb1433f0bca183721862a180af4d6159759f21ec27b0d",
     "sdk/.gitignore": "d6b19c0d568aed60d87970570e713911a505b418bd91904925a6ebd75cb9eb9d",
     "sdk/LICENSE": "b61d0b216ea6b3a6be922ef85f6348568069fb3c5fc816d021ee66ec43de8157",
-    "sdk/README.md": "8963c79e5df36c97a4cbf73d83e8083a6006f2c7e88fb6746ea6cbb9fd53bff5",
+    "sdk/README.md": "bb38d8439cd700d0ff209297c339f35fa06d27d81d4a229f03eb01647232035c",
     "sdk/SDK_VERSION": "e9dd8507f4bf0c6f42458e41aea833ad0bd3f6127272335eee9bf4d58541ed67",
     "sdk/THIRD_PARTY.txt": "568e1f2d724284edd7eb00c4b3e5d626c6c445feb8052e497306c06846eaec0b",
     "sdk/cmake/XbeRecomp.cmake": "6db55d8ee97c054f82d79493723d5fd77408735a935d920e153dd816a835bb8a",
     "sdk/cmake/XbeTests.cmake": "67bf6de7e35d6383f5ef6033071a0c3fb6dc285c5bcf45897126a9e16cc75c85",
     "sdk/compile_flags.txt": "1ba1c242fff5b4fd41c114a95a95303902e20b2467ef4e3615832fb7640d2e52",
-    "sdk/docs/XBE_PORTING_COOKBOOK.md": "60e81d74a1299145c9cd4b36fc6b94e2fca23b525ba18819b210b8acba18ccfd",
     "sdk/harness/README.md": "310933cc3a147d0893382fb573d271460396e1a565308b00ae8488d04208566a",
     "sdk/harness/app_headless.cpp": "955c4300559195ba4e389516f2104dcacc35afa5987c0550b8b8aafd73cbb764",
     "sdk/harness/build.sh": "868dcfe55aec00344cbd77cdd519e7475243d4ccbf8f332a836a37cbd7d0e8c2",
@@ -118,17 +117,6 @@
     "sdk/runtime/xdk/layout.h": "61941adaa1c7daf219cd10eaaafbe7f83698a7935539e3b80537984c7dd2273e",
     "sdk/runtime/xdk/xapi.cpp": "c45d1bbbae25bf0043fc2e89ba1171b6cb47d6a1584961a830f45121e85380fc",
     "sdk/runtime/xdk/xnet.cpp": "9e2ac2268756f80cb0746275f1029256536f6727633bd947b9a18783e2c022af",
-    "sdk/templates/game/.gitattributes": "02c4d9e006deb91568beb1433f0bca183721862a180af4d6159759f21ec27b0d",
-    "sdk/templates/game/.gitignore": "82004f3b4c6cfbf96626faf815459d336502e555486a6ef2d4e4b761344edb49",
-    "sdk/templates/game/CMakeLists.txt": "8296f9e59fb7ee75487a9da179e47f51865cd84e97dd8ea46639e4d6ed6dfbe7",
-    "sdk/templates/game/CMakePresets.json": "c33613371ca66098ee4f727046a2af9081316d19a971ddc34b7dc98c546b6b43",
-    "sdk/templates/game/README.md": "0e0db85e14d0031c1e4b8bfe01f89131f6be54ef2c4d6f0a7ce49027269dcb01",
-    "sdk/templates/game/build.bat": "e89cf2e22397805453324e62780d22cc94608bcdf83e1cd0e0e26d02e60eab5a",
-    "sdk/templates/game/build.sh": "9081966e7c873e1459bb53d8a2e3ec3afb04167f0f107500003970473eccbbe0",
-    "sdk/templates/game/config/game.toml": "18b3bab59d505635e90f9a587e02ec5923d75005801717e5810498fa8e94c5e9",
-    "sdk/templates/game/release.bat": "3fcb961cb167f44b3d2fe4224ff7f2a74587a41d7174ff402a3572756b524dfd",
-    "sdk/templates/game/src/common/game_info.cpp": "dbf38e522e7156421dafb6e40cb1e51183bc1d5e09431730f540835015181d3b",
-    "sdk/templates/game/src/game/hooks.cpp": "c625669c44b0086c021808c3de2b7227e05d57b8428d44956ba19fa5ac413414",
     "sdk/tests/check.h": "6341951f5a8f6380407add29ddbea3945858caab06a7b90df0b93edb25c76ede",
     "sdk/tests/host_memory.cpp": "3d9679d1f7c8301fc79f26320894b56dd1dfcf2d6b8cf7cc70318ecf781b1959",
     "sdk/tests/irql.cpp": "6b4363448c4aac215b579f50e5b0a46190015a58d41662f23be4c58ac8ae80f6",
@@ -155,8 +143,6 @@
     "sdk/tools/recomp/codegen_int.cpp": "182e22f474707474134586ba6417353bfdeb9d8384fefed58623667fa182904a",
     "sdk/tools/recomp/main.cpp": "3f82fbb66f70c8656225c1e96e4836eb81727e6ef3b4120c3e34c0b546c53f9c",
     "sdk/tools/recomp/test_segment_stack.py": "6615c273317ffda60fb70bfa5756a8b881058c7ffcfda6a6f3895d212566f805",
-    "sdk/tools/sdk_sync/sdk_games.example.toml": "eb3522f962e359e21aefa88f851fccf2a59717aebaadf43012e2e117f6f4d4ee",
-    "sdk/tools/sdk_sync/sdk_sync.py": "2536b149d39288429d1fc116b3483173a3415e1188c1c1f70d9a51c8c846538d",
     "sdk/tools/symbols/main.cpp": "e9808a0f278a4f30489e4c4a535e0eb8c8bd12aa325b8f0f2c885fd73927338a",
     "sdk/tools/symbols/test_xbsdb_import.py": "c55aee32378810123699dc744daa17aa3c54c6b17b937dd3d52a5a0b15efb418",
     "sdk/tools/symbols/xbe2pe.py": "ebd2f70151ef3dec67a3edc17ac9f3ef0b972d7464b199eea76d1c4a279acca8",
@@ -169,5 +155,10 @@
   "port_patches": [
     "patches/english-ui-observers.patch",
     "patches/preview-depth.patch"
+  ],
+  "omitted_sdk_paths": [
+    "sdk/templates/game/",
+    "sdk/tools/sdk_sync/",
+    "sdk/docs/XBE_PORTING_COOKBOOK.md"
   ]
 }
