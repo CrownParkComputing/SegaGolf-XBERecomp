@@ -84,7 +84,7 @@
     "sdk/runtime/gpu/vk_shaders.h": "8229a8ba2f9e47ca9756c89586db00406c5b98751e9a8343993fbada800a857a",
     "sdk/runtime/gpu/vk_swapchain.cpp": "c4fe7bf3d179b3f39b3d3bc9a0c8915766e19c603f2cff020e763e7be80606e0",
     "sdk/runtime/gpu/vk_swapchain.h": "78093c3b2d6a3788b2c16b51055e8c2e8fbbcec597b183cf1cd1541fe3a4dcb6",
-    "sdk/runtime/gpu/vulkan.cpp": "451d726b1119f7896c04630e77c5c175385ec5d6e21b8613e765d4195de73058",
+    "sdk/runtime/gpu/vulkan.cpp": "ca5b8d8c0370ccbce775b4f5a61e2ddb3d34911a875c743dff390bd46312dcc2",
     "sdk/runtime/gpu/vulkan.h": "be046f7adc4b722290fe1ba5dfc515242f43d7f4d54128ae2bb3ce53eec77b57",
     "sdk/runtime/gpu/vulkan_present.cpp": "93d417c06160530854b3dd47debffad195dc3fb1bc09878f15816a62cd83a461",
     "sdk/runtime/gpu/vulkan_readback.cpp": "4f9334948926c09bbbc51d6482bbf0f69435ef3d48c9f76ff6c6a8f515eaa4b6",
@@ -143,7 +143,7 @@
     "sdk/tests/test_keyboard.cpp": "df0b52fd3c43582f4a2b72970ac914ab385779b7f4bd266797e5e82539581651",
     "sdk/tests/test_keys.cpp": "8309865b55effddfa6ed432683899fc3bd7cb43d7d43e6134a20accea6cc3d7e",
     "sdk/tests/test_nv2a_texture.cpp": "60389d1c7f86e6f94ec59de40364387e2c5fc9bb1e39c3841dbfeed60a9938df",
-    "sdk/tests/test_render.cpp": "335fdff33524466e902f44dfc5953d3460faa1aa3eeb85f6ffbbdaaf2fa21117",
+    "sdk/tests/test_render.cpp": "7f7afb287deef0f7c8f7526fc855a3f89a148ef62a61fcb42a8981d9faa34351",
     "sdk/tests/test_shaders.cpp": "63b9ca8b387a7df94f50844c810668b1af6cff1045406da2bf979fa4be62bfdc",
     "sdk/tools/iso_extract/main.cpp": "9df0c27c023ffef306234bd502f13ec066d75ba5cd63a564f145367171127a57",
     "sdk/tools/recomp/analysis.cpp": "122f8aa8c275365759014a802d5b00298bc95f4303b49c1b6d1c6324aff90822",
@@ -167,6 +167,7 @@
     "sdk/xdk/5849/signatures.toml": "7b3dca707db038c7e007c0a3f4681b4d456b1f98c4a77a61371d3808b95fb5a2"
   },
   "port_patches": [
-    "patches/english-ui-observers.patch"
+    "patches/english-ui-observers.patch",
+    "patches/preview-depth.patch"
   ]
 }

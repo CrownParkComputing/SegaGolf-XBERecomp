@@ -120,8 +120,8 @@ does not complete when running only the factory satellite-sub configuration.
 
 - Validate a complete hole and a range of shot types/power levels.
 - Validate a complete head-to-head round with both playable cabinets.
-- Investigate remaining texture lookup warnings and character material artifacts.
-- Verify audio output and sound wrapper behavior during play; DSP envelopes
+- Investigate remaining texture lookup warnings.
+- Verify sound fidelity and sound wrapper behavior during play; DSP envelopes
   remain unsupported by the runtime.
 - Add cabinet persistence and verify restart behavior.
 - Five kernel imports remain unimplemented: ObOpenObjectByName,
@@ -217,3 +217,34 @@ The SDK-overlay regression passes, Python tools compile, extraction refuses to
 overwrite existing files, and all 1,449 extracted file hashes/sizes were
 independently verified. The source diff passes whitespace checks; ignored game
 files and build products are excluded from the new source listing.
+
+The character-selection preview now keeps the main 800x600 depth buffer while
+drawing into its 512x512 colour target. The renderer previously dropped depth
+attachments whenever their dimensions differed, causing hidden geometry to
+draw over faces, hats and clothing. Vulkan allows a larger attachment covering
+the render area. Native captures and user verification confirm the preview
+is corrected. A focused GPU regression fails against the original condition
+and passes with the fix in both dynamic-rendering and render-pass modes; it
+also checks depth contents survive changes of colour target.
+
+The launcher offers one or two playable windows with English or Japanese text,
+remembers the choice in `.local/launcher.json`, and accepts `--players`,
+`--language`, `--menu` and `--no-menu`. With Zenity installed, an argument-free
+desktop launch opens the options window. F10 has an interface-language selector
+and shows the current window count. Launcher tests run temporary stand-in
+executables to check role/IP/language forwarding, process cleanup, saved choices
+and cancellation. All eight enabled CTest targets pass; the full SDK diagnostic
+suite is opt-in for manual use.
+
+Audio tracing found valid stereo PCM from the original game (44.1 kHz, 16-bit,
+with nonzero mixed output), while the laptop's default PipeWire speaker sink
+was muted. The sink was unmuted and the temporary tracing was removed from the
+normal build. A six-second capture from the speaker-output monitor confirms
+48 kHz stereo audio reaches the output device with both playable windows
+running. Sound fidelity, effects and full-round audio remain unverified.
+Diagnostic logs are archived under `.local/evidence/audio-diagnosis/`.
+
+The README includes cropped native screenshots of card entry, the corrected
+character preview, the tutorial and first-hole play, plus partial-translation
+coverage, language switching and launcher instructions. These selected images
+are tracked under `docs/images/`; full desktop captures remain private.

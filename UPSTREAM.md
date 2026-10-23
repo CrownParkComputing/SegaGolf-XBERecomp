@@ -15,6 +15,10 @@ network server. Do not apply these patches again to the included SDK.
 `patches/english-ui-observers.patch` records the additional renderer observation
 hooks used by the English label layer. Those are also already applied.
 
+`patches/preview-depth.patch` preserves a larger shared depth buffer when a
+smaller character-preview target is bound, with a Vulkan regression covering
+occlusion and retained depth contents. This patch is already applied too.
+
 `UPSTREAM.json` records the original suite commit, patch list and SHA-256 of
 each included SDK file. The SDK's original license and third-party notices
 are retained in `sdk/LICENSE` and `sdk/THIRD_PARTY.txt`.
@@ -25,4 +29,5 @@ External build dependencies retain their upstream notices and are fetched at
 the versions in `sdk/cmake/XbeRecomp.cmake`; the Linux DXC archive is hash-pinned.
 
 Game assets, generated game code, local disc containers, build outputs, saves,
-settings, logs and captures are excluded from this repository.
+settings and logs are excluded from this repository. Selected cropped
+screenshots are included under `docs/images/`; diagnostic captures remain local.

@@ -12,6 +12,7 @@ if(TARGET SegaGolf)
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" VERBATIM)
     add_custom_target(segagolf_language_tables DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/generated/game/language_tables.h")
     add_dependencies(SegaGolf segagolf_language_tables)
+    add_test(NAME SegaGolfLauncherTests COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/launcher.py")
 endif()
 option(SEGAGOLF_INPUT_SMOKE "Inject a bounded SDL mouse/keyboard sequence for input validation" OFF)
 if(SEGAGOLF_INPUT_SMOKE AND TARGET SegaGolf)
@@ -62,4 +63,15 @@ target_compile_options(SegaGolfResourceTests PRIVATE -UNDEBUG -ffunction-section
 target_link_options(SegaGolfResourceTests PRIVATE -fuse-ld=lld -Wl,--gc-sections)
 add_test(NAME SegaGolfResourceTests COMMAND SegaGolfResourceTests)
 add_dependencies(SegaGolfResourceTests recompile_SegaGolf)
+
+# Keep GPU diagnostics opt-in: they need a Vulkan device, unlike the API tests.
+option(SEGAGOLF_RENDERER_TESTS "Build the SDK Vulkan renderer regression tests" OFF)
+if(SEGAGOLF_RENDERER_TESTS)
+    add_xbe_tests(SegaGolfRendererTests)
+    set_tests_properties(SegaGolfRendererTests PROPERTIES
+        DISABLED TRUE)
+    add_test(NAME SegaGolfPreviewDepthTests COMMAND SegaGolfRendererTests "larger shared depth")
+    add_test(NAME SegaGolfPreviewDepthRenderPassTests COMMAND SegaGolfRendererTests "larger shared depth")
+    set_tests_properties(SegaGolfPreviewDepthRenderPassTests PROPERTIES ENVIRONMENT "XBE_VK_RENDERPASS=1")
+endif()
 endif()

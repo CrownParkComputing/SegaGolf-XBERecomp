@@ -80,8 +80,13 @@ void Draw(double fps) {
         ImGui::TextWrapped("Swing: hold the RIGHT mouse button, pull down to raise the club, pause at the desired power, then push up to hit. Releasing also returns the club. Controller: pull the right stick down, then return it. Keyboard: hold K for a full backswing, release to hit.");
         ImGui::TextWrapped("Start / Enter: start. Back / Backspace: insert a coin. F10 / R3 / Escape: resume.");
         ImGui::Separator();
-        bool english = golf::language::Enabled();
-        if (ImGui::Checkbox("English text and labels", &english)) golf::language::SetEnabled(english);
+        int language = golf::language::Enabled() ? 0 : 1;
+        if (ImGui::Combo("Interface language", &language, "English (partial translation)\0Japanese (original)\0"))
+            golf::language::SetEnabled(language == 0);
+        ImGui::TextWrapped("English translates selected menus and controls. Some Japanese text and voices remain.");
+        const char* players = std::getenv("SEGAGOLF_PLAYERS");
+        ImGui::Text("Player windows: %s", players ? players : "1");
+        ImGui::TextWrapped("Choose one or two players in the launch options before starting. Each window is a separate playable cabinet.");
         int display = int(draft.display_mode);
         if (ImGui::Combo("Display", &display, "Fullscreen\0Borderless\0Windowed\0"))
             draft.display_mode = app::DisplayMode(display);

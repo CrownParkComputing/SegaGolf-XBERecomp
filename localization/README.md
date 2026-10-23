@@ -1,11 +1,11 @@
 # English interface
 
 The first English pass contains 66 messages and 243 sprite labels. English is
-on by default. In either player window, open F10 and toggle **English text and
-labels** to compare it with Japanese. To start in Japanese:
+on by default. Choose English or Japanese in the launch options, or open F10
+and change **Interface language** in either player window. To start in Japanese:
 
 ```sh
-SEGAGOLF_LANGUAGE=ja ./run.sh
+./run.sh --language ja
 ```
 
 This covers card entry, play-mode choices, multiplayer prompts, common dialog
@@ -34,7 +34,8 @@ Native F3 captures save the guest image before host overlays, so they show
 English runtime messages but retain Japanese sprite artwork underneath. Use a
 desktop screenshot to capture the complete visible English interface.
 
-No original or modified game images are distributed. To extend the translation,
+The repository includes gameplay screenshots for documentation, but no original
+game files or modified texture atlases. To extend the translation,
 edit `en.json` and rebuild. String entries use guest virtual addresses; sprite
 entries use XST filenames and zero-based sprite indices. Build validation rejects
 strings that exceed their original slot or change the formatting arguments.

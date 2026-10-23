@@ -352,6 +352,39 @@ TEST("render: the depth test keeps the nearer of two overlapping triangles in ei
     }
 }
 
+TEST("render: smaller previews retain a larger shared depth buffer") {
+    REQUIRE(Vulkan());
+    GuestSurface rt(kFmtLinArgb, kW, kH), second(kFmtLinArgb, kW, kH);
+    GuestSurface zs(kFmtLinD24S8, kW * 2, kH * 3 / 2);
+    State s = BaseState(rt.s, &zs.s);
+    s.vs_handle = kFvfXyzRhw | kFvfDiffuse;
+    s.rs[kRsZEnable] = 1;
+    const uint32_t near_color = Argb(255, 0, 255, 0), far_color = Argb(255, 255, 0, 0);
+    GuestBuffer near_tri(RhwDiffuse({{{4, 4, 0.2f, 1}}, {{60, 4, 0.2f, 1}}, {{32, 60, 0.2f, 1}}},
+                                   {near_color, near_color, near_color}));
+    GuestBuffer far_tri(RhwDiffuse({{{4, 4, 0.8f, 1}}, {{60, 4, 0.8f, 1}}, {{32, 60, 0.8f, 1}}},
+                                  {far_color, far_color, far_color}));
+    Clear(s, Vulkan().get(), kClearTarget | kClearZ | kClearStencil, 0);
+    s.streams[0] = {near_tri.header, 20};
+    Draw(s, Vulkan().get(), kTriangleList, 3);
+    s.streams[0] = {far_tri.header, 20};
+    Draw(s, Vulkan().get(), kTriangleList, 3);
+    Vulkan()->Sync(rt.data, 0);
+    CHECK_EQ(rt.At(32, 24), near_color);
+
+    // Changing colour targets must retain the same depth contents, rather
+    // than silently starting a separate depth surface for each preview.
+    s.rt = second.s;
+    Clear(s, Vulkan().get(), kClearTarget, 0);
+    Draw(s, Vulkan().get(), kTriangleList, 3);
+    Vulkan()->Sync(second.data, 0);
+    CHECK_EQ(second.At(32, 24), 0u);
+    Clear(s, Vulkan().get(), kClearZ, 0);
+    Draw(s, Vulkan().get(), kTriangleList, 3);
+    Vulkan()->Sync(second.data, 0);
+    CHECK_EQ(second.At(32, 24), far_color);
+}
+
 // A lone triangle off the pixel grid: the reference renderer counts a pixel centre exactly on an edge as inside (both
 // triangles of a strip draw it, so a blended strip blends its diagonal twice); a GPU, the console's included, draws such
 // a pixel once, by the top-left rule. Measured: a strip's 64 diagonal pixels differ by exactly one extra blend.

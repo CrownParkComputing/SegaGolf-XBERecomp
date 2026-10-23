@@ -1072,7 +1072,10 @@ Target* VulkanRenderer::EnsureTarget(const Surface& s, bool depth) {
 bool VulkanRenderer::BindTargets(const State& s) {
     Target* rt = EnsureTarget(s.rt, false);
     Target* ds = s.rs[kRsZEnable] || s.rs[kRsStencilEnable] ? EnsureTarget(s.zs, true) : nullptr;
-    if (rt && ds && (rt->w != ds->w || rt->h != ds->h)) ds = nullptr;
+    // A title can reuse its main depth buffer for a smaller offscreen target
+    // (for example, character previews). Both Vulkan rendering paths allow
+    // larger attachments as long as they cover the whole render area.
+    if (rt && ds && (ds->w < rt->w || ds->h < rt->h)) ds = nullptr;
     if (!rt && !ds) return false;
     if (rt) {
         if (LatchCpuWrite(*rt)) UploadTarget(*rt, s.rt);

@@ -12,10 +12,30 @@ and the next shot. A complete hole, sound fidelity and Android remain
 unverified.
 
 The first English interface pass is enabled by default: 66 messages and 243
-sprite labels. F10's **English text and labels** checkbox switches languages;
-`SEGAGOLF_LANGUAGE=ja ./run.sh` starts in Japanese. Some course commentary,
+sprite labels. Choose English or Japanese in the launcher, or use F10's
+**Interface language** selector while playing. Some course commentary,
 names, operator screens and artwork remain untranslated. See
 [localization notes](localization/README.md) for coverage and editing.
+
+| English card entry | Tutorial and mouse controls |
+| --- | --- |
+| ![Card entry with English prompts and card options](docs/images/card-entry.png) | ![Tutorial with English instructions and touch controls](docs/images/how-to-play.png) |
+| Character selection | First-hole gameplay |
+| ![Character selection with the corrected 3D player preview](docs/images/character-selection.png) | ![First hole with English club, camera, aim and caddie controls](docs/images/first-hole.png) |
+
+These are cropped screenshots from the native Linux port. English coverage is
+partial: card entry, play modes, multiplayer prompts, common buttons, tutorial
+instructions and selected gameplay controls are translated. Character names
+and descriptions, course-specific caddie commentary, operator screens, voices
+and some HUD artwork still use Japanese. The screenshots include those gaps.
+
+The original game stores text both as Shift-JIS strings and as graphics in
+sprite atlases. The port replaces selected strings in memory and places
+English text panels over recognized sprite labels. It preserves the original
+touch regions; the panels do not reproduce the original artwork's typography.
+Switching languages restores the Japanese strings and hides the English
+panels. Translation wording lives in [localization/en.json](localization/en.json);
+see the [editing notes](localization/README.md) before adding entries.
 
 Requires Linux x86-64, Python 3.11+, PyCryptodome for disc extraction, Clang,
 LLD, CMake 3.25+, Ninja and Vulkan 1.3 development files/drivers. CMake uses an
@@ -31,7 +51,24 @@ python3 tools/build_native.py --jobs 4 --tests
 ./run.sh
 ```
 
-The launcher opens two playable windows, Player 1 (main satellite,
+Running `./run.sh` on a desktop opens launch options for **1 or 2 players** and
+**English or Japanese**. The options window uses the optional `zenity` program.
+Your chosen setup is saved in `.local/launcher.json`. Without Zenity, the
+launcher starts directly; the command-line options work in either case:
+
+```sh
+./run.sh --players 1 --language en  # One English player window
+./run.sh --players 2 --language ja  # Two Japanese player windows
+./run.sh --no-menu                 # Start with the saved setup
+./run.sh --menu                    # Show the options window explicitly
+```
+
+An explicit `--language` takes precedence over `SEGAGOLF_LANGUAGE`; otherwise
+that environment variable overrides the saved language. F10 changes language
+for the current player window until the next launch. English remains a partial
+translation; Japanese restores the original text and artwork.
+
+The two-player setup opens Player 1 (main satellite,
 `127.0.0.2`) and Player 2 (sub satellite, `127.0.0.3`). A third process runs
 the original server at `127.0.0.1` in the background, using offscreen Vulkan
 so it needs no visible game screen. Closing either player window stops all
@@ -81,6 +118,12 @@ After startup, insert a coin with Backspace and left-click the title
 screen. This adds a credit and enters Card Entry; the no-card option is on the
 left. A complete hole has not yet been validated.
 
+Audio uses the system's default output device. Startup can be quiet until the
+title screen appears. If the game is silent, check the system output's mute
+and volume controls; opening F10 pauses game audio along with play. Stereo
+mixer output has been verified, while sound fidelity and DSP effects still
+need validation.
+
 Preparation requires PyCryptodome. It reads the zipped GDI/raw-sector dump,
 extracts the 512 MB container, verifies the track's ZIP CRC, decrypts FATX and
 writes the original game tree under `assets/`. It refuses to overwrite previous
@@ -123,6 +166,19 @@ send SDL mouse gestures through the original analog decoder and swing filter,
 checking backswing latching, forward strokes and the right-stick fallback.
 An optional `-DSEGAGOLF_INPUT_SMOKE=ON` build injects a bounded sequence of SDL
 mouse and keyboard events after 100 seconds; it is disabled in normal builds.
+
+The optional GPU regressions check that smaller preview targets retain a
+larger shared depth buffer, including its contents across target changes:
+
+```sh
+cmake --preset linux-release -DSEGAGOLF_RENDERER_TESTS=ON
+cmake --build --preset linux-release --target SegaGolfRendererTests --parallel 4
+ctest --preset linux-release -R SegaGolfPreviewDepth
+```
+
+These two tests require a Vulkan device and exercise both dynamic rendering
+and the render-pass fallback. The full SDK test executable is available for
+manual diagnostics; only the focused preview tests run automatically.
 
 For an existing dependency cache, `tools/build_native.py` accepts
 `--deps-dir /path/to/third_party` (containing `zydis-src`, `imgui-src`, etc.)
